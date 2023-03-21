@@ -90,7 +90,7 @@ public abstract class AbstractClient {
             int statusCode = connection.getResponseCode();
 
             // 读取响应
-            StringBuffer respData = new StringBuffer();
+            StringBuilder respData = new StringBuilder();
 
             InputStream inputStream;
             if (HttpURLConnection.HTTP_OK == statusCode) {
@@ -126,6 +126,13 @@ public abstract class AbstractClient {
                 if (resp.length() < 1) {
                     throw new RuntimeException("接口请求响应数据为空");
                 }
+            } else {
+                String errMsg = "HTTP code: " + statusCode;
+                if (resp.length() > 0) {
+                    errMsg += ", msg: " + resp;
+                }
+
+                throw new RuntimeException(errMsg);
             }
 
             return resp;
