@@ -7,9 +7,11 @@ import top.iserv.shareable.models.BindRespModel;
 import top.iserv.shareable.models.ReceiverModel;
 import top.iserv.shareable.request.AmountRequest;
 import top.iserv.shareable.request.BindRequest;
+import top.iserv.shareable.request.SharingRequest;
 import top.iserv.shareable.request.UnbindRequest;
 import top.iserv.shareable.response.AmountResponse;
 import top.iserv.shareable.response.BindResponse;
+import top.iserv.shareable.response.SharingResponse;
 import top.iserv.shareable.response.UnbindResponse;
 
 public class Client extends AbstractClient {
@@ -55,6 +57,16 @@ public class Client extends AbstractClient {
         String respData = send(request);
 
         AmountResponse response = JSON.parseObject(respData, AmountResponse.class);
+
+        checkBizCode(response.getCode(), response.getMsg());
+
+        return response;
+    }
+
+    public SharingResponse sharing(SharingRequest request) {
+        String respData = send(request);
+
+        SharingResponse response = JSON.parseObject(respData, SharingResponse.class);
 
         checkBizCode(response.getCode(), response.getMsg());
 
