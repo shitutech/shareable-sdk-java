@@ -41,8 +41,9 @@ public abstract class AbstractClient {
     /**
      * @see <a href="https://docs.iserv.top/sharing/technology.html">分账技术对接说明</a>
      */
-    protected String send(String apiUri, HashMap<String, Object> reqMap) {
+    protected String send(AbstractRequest request) {
         try {
+            String apiUri = request.getApiUri();
             String method = "POST";
             URL url = new URL("https://pay.51wanquan.com" + apiUri);
 
@@ -63,7 +64,7 @@ public abstract class AbstractClient {
             // 签名串构成
             String nonceStr = UtilHelper.randomString(32);
             long timestamp = System.currentTimeMillis();
-            String reqBody = JSON.toJSONString(reqMap);
+            String reqBody = JSON.toJSONString(request);
 
             String signStr = method + "\n" + apiUri + "\n" + timestamp + "\n" + nonceStr + "\n" +
                     reqBody + "\n";

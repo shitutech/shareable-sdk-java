@@ -2,7 +2,7 @@ package top.iserv.shareable.request;
 
 import top.iserv.shareable.AbstractRequest;
 
-public class AmountRequest extends AbstractRequest<AmountRequest> {
+public class AmountRequest extends AbstractRequest {
     /**
      * 收单商户号
      */
