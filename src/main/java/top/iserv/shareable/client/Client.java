@@ -5,14 +5,12 @@ import top.iserv.shareable.AbstractClient;
 import top.iserv.shareable.Config;
 import top.iserv.shareable.models.BindRespModel;
 import top.iserv.shareable.models.ReceiverModel;
-import top.iserv.shareable.request.AmountRequest;
-import top.iserv.shareable.request.BindRequest;
-import top.iserv.shareable.request.SharingRequest;
-import top.iserv.shareable.request.UnbindRequest;
-import top.iserv.shareable.response.AmountResponse;
-import top.iserv.shareable.response.BindResponse;
-import top.iserv.shareable.response.SharingResponse;
-import top.iserv.shareable.response.UnbindResponse;
+import top.iserv.shareable.models.SharingInquiryReceiverModel;
+import top.iserv.shareable.models.SharingInquiryRespModel;
+import top.iserv.shareable.request.*;
+import top.iserv.shareable.response.*;
+
+import java.util.List;
 
 public class Client extends AbstractClient {
     public Client(Config config) {
@@ -26,7 +24,7 @@ public class Client extends AbstractClient {
 
         BindRespModel respModel = response.getData();
 
-        if (respModel.getReceiver() != null) {
+        if (respModel != null && respModel.getReceiver() != null) {
             ReceiverModel receiverModel = JSON.parseObject(respModel.getReceiver(), ReceiverModel.class);
             response.getData().setReceiverModel(receiverModel);
         }
@@ -43,7 +41,7 @@ public class Client extends AbstractClient {
 
         BindRespModel respModel = response.getData();
 
-        if (respModel.getReceiver() != null) {
+        if (respModel != null && respModel.getReceiver() != null) {
             ReceiverModel receiverModel = JSON.parseObject(respModel.getReceiver(), ReceiverModel.class);
             response.getData().setReceiverModel(receiverModel);
         }
@@ -67,6 +65,23 @@ public class Client extends AbstractClient {
         String respData = send(request);
 
         SharingResponse response = JSON.parseObject(respData, SharingResponse.class);
+
+        checkBizCode(response.getCode(), response.getMsg());
+
+        return response;
+    }
+
+    public SharingInquiryResponse sharingInquiry(SharingInquiryRequest request) {
+        String respData = send(request);
+
+        SharingInquiryResponse response = JSON.parseObject(respData, SharingInquiryResponse.class);
+
+        SharingInquiryRespModel respModel = response.getData();
+
+        if (respModel != null && respModel.getReceivers() != null) {
+            List<SharingInquiryReceiverModel> receiverModel = JSON.parseArray(respModel.getReceivers(), SharingInquiryReceiverModel.class);
+            response.getData().setReceiverModel(receiverModel);
+        }
 
         checkBizCode(response.getCode(), response.getMsg());
 
