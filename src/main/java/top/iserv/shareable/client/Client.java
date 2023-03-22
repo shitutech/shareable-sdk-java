@@ -7,8 +7,10 @@ import top.iserv.shareable.models.BindRespModel;
 import top.iserv.shareable.models.ReceiverModel;
 import top.iserv.shareable.request.AmountRequest;
 import top.iserv.shareable.request.BindRequest;
+import top.iserv.shareable.request.UnbindRequest;
 import top.iserv.shareable.response.AmountResponse;
 import top.iserv.shareable.response.BindResponse;
+import top.iserv.shareable.response.UnbindResponse;
 
 public class Client extends AbstractClient {
     public Client(Config config) {
@@ -19,6 +21,23 @@ public class Client extends AbstractClient {
         String respData = send(request);
 
         BindResponse response = JSON.parseObject(respData, BindResponse.class);
+
+        BindRespModel respModel = response.getData();
+
+        if (respModel.getReceiver() != null) {
+            ReceiverModel receiverModel = JSON.parseObject(respModel.getReceiver(), ReceiverModel.class);
+            response.getData().setReceiverModel(receiverModel);
+        }
+
+        checkBizCode(response.getCode(), response.getMsg());
+
+        return response;
+    }
+
+    public UnbindResponse unbind(UnbindRequest request) {
+        String respData = send(request);
+
+        UnbindResponse response = JSON.parseObject(respData, UnbindResponse.class);
 
         BindRespModel respModel = response.getData();
 
