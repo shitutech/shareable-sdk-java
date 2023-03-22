@@ -1,5 +1,7 @@
 package top.iserv.shareable.models;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 
 public class BindRespModel implements Serializable {
@@ -14,8 +16,10 @@ public class BindRespModel implements Serializable {
     /**
      * 分账接收方信息
      */
-    //@JSONField(deserializeUsing = BindRespReceiverValueDeserializer.class)
     private String receiver;
+
+    @JSONField(serialize = false, deserialize = false)
+    private ReceiverModel receiverModel;
 
     public String getMchId() {
         return mchId;
@@ -31,6 +35,14 @@ public class BindRespModel implements Serializable {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public ReceiverModel getReceiverModel() {
+        return receiverModel;
+    }
+
+    public void setReceiverModel(ReceiverModel receiverModel) {
+        this.receiverModel = receiverModel;
     }
 
     @Override

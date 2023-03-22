@@ -3,6 +3,8 @@ package top.iserv.shareable.client;
 import com.alibaba.fastjson.JSON;
 import top.iserv.shareable.AbstractClient;
 import top.iserv.shareable.Config;
+import top.iserv.shareable.models.BindRespModel;
+import top.iserv.shareable.models.ReceiverModel;
 import top.iserv.shareable.request.AmountRequest;
 import top.iserv.shareable.request.BindRequest;
 import top.iserv.shareable.response.AmountResponse;
@@ -17,6 +19,13 @@ public class Client extends AbstractClient {
         String respData = send(request);
 
         BindResponse response = JSON.parseObject(respData, BindResponse.class);
+
+        BindRespModel respModel = response.getData();
+
+        if (respModel.getReceiver() != null) {
+            ReceiverModel receiverModel = JSON.parseObject(respModel.getReceiver(), ReceiverModel.class);
+            response.getData().setReceiverModel(receiverModel);
+        }
 
         checkBizCode(response.getCode(), response.getMsg());
 
