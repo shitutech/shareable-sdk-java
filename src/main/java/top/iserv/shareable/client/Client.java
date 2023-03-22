@@ -98,6 +98,16 @@ public class Client extends AbstractClient {
         return response;
     }
 
+    public RefundInquiryResponse refundInquiry(RefundInquiryRequest request) {
+        String respData = send(request);
+
+        RefundInquiryResponse response = JSON.parseObject(respData, RefundInquiryResponse.class);
+
+        checkBizCode(response.getCode(), response.getMsg());
+
+        return response;
+    }
+
     private void checkBizCode(int code, String errMsg) {
         if (code != 200) {
             throw new RuntimeException("业务请求响应抛出异常。Err: " + code + "::" + errMsg);
