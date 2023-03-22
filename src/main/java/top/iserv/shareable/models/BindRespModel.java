@@ -14,5 +14,30 @@ public class BindRespModel implements Serializable {
     /**
      * 分账接收方信息
      */
+    //@JSONField(deserializeUsing = BindRespReceiverValueDeserializer.class)
     private String receiver;
+
+    public String getMchId() {
+        return mchId;
+    }
+
+    public void setMchId(String mchId) {
+        this.mchId = mchId;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    @Override
+    public String toString() {
+        return "BindRespModel{" +
+                "mchId='" + mchId + '\'' +
+                ", receiver=" + receiver +
+                '}';
+    }
 }

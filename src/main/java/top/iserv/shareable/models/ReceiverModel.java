@@ -13,6 +13,7 @@ public class ReceiverModel implements Serializable {
 
     /**
      * 分账接收方类型，当前固定为 B (商户号)
+     * 分账接收方类型，B商户 C钱包会员
      */
     private String receiverType = "B";
 

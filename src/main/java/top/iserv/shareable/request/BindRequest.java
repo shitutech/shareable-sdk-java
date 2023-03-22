@@ -1,7 +1,9 @@
 package top.iserv.shareable.request;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import top.iserv.shareable.AbstractRequest;
 import top.iserv.shareable.models.ReceiverModel;
+import top.iserv.shareable.serializers.RequestModelJsonValueSerializer;
 
 public class BindRequest extends AbstractRequest {
     /**
@@ -12,7 +14,8 @@ public class BindRequest extends AbstractRequest {
     /**
      * 分账接收方信息
      */
-    private ReceiverModel receiver;
+    @JSONField(serializeUsing = RequestModelJsonValueSerializer.class)
+    public ReceiverModel receiver;
 
     @Override
     public String getApiUri() {
