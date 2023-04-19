@@ -33,3 +33,15 @@ public class Main {
 }
 
 ```
+
+# 接口
+
+| API       | 请求类                   | 响应类                    |
+|-----------|-----------------------|------------------------|
+| 添加分账接收方   | BindRequest           | BindResponse           |
+| 删除分账接收方   | UnbindRequest         | UnbindResponse         |
+| 查询订单待分账金额 | AmountRequest         | AmountResponse         |
+| 分账        | SharingRequest        | SharingResponse        |
+| 分账查询      | SharingInquiryRequest | SharingInquiryResponse |
+| 分账回退      | RefundRequest         | RefundResponse         |
+| 分账回退查询    | RefundInquiryRequest  | RefundInquiryResponse  |
